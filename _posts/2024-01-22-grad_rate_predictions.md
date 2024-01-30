@@ -12,14 +12,14 @@ I was asked to review projected graduation rates, which had been provided to the
 
 First, I load a series of packages that allow me to manipulate data using the tidyverse and select a nice theme for my ggplot figures.
 
-```{r}
+```r
 library(tidyverse)
 library(ggthemes)
 ```
 
 Next, I create a data frame that contains the known graduation rates from 2016-2022 and create a dataframe wich contains the unknown years 2023-2025.
 
-```{r}
+```r
 data <- data.frame(year = c(2016, 2017, 2018, 2019, 2020, 2021, 2022), grad_rate = c(.28, .32, .41, .37, .42, .4, .37))
 new_data <- data.frame(year = c(2023, 2024, 2025))
 ```
@@ -27,24 +27,24 @@ Note that graduation rates reflect the rate at which a cohort of students comple
 
 Now I am going to reproduce the original analyst's model, which will be the base model. We model graduation rate as a function of year using the 2016-2022 data and I view the model using summary(). Approximately 33% of the variability in graduation rates can be explained as a function of year. 
 
-```{r}
+```r
 base_model <- lm(grad_rate ~ year, data = data)
 summary(base_model)
 ```
 Next, I use the predict() function to produce the estimates for 2016-2022 using the base model, which ultimately is the formula GradRate = -31.36 + year*0.0157. This also includes the prediction interval for understanding the potential range of possible values we could expect.
 
-```{r}
+```r
 pred.int <- data.frame(predict(base_model, interval = 'prediction'))
 ```
 
 When I plot the model for stakeholders, I want to show the model, the known data for 2016-2022, and the predictions for 2023-2025. I need to combine my model predictions with the original data using a cbind()
 
-```{r}
+```r
 base_data <- cbind(data, pred.int)
 ```
 We're still missing an important part, which is the predictions for the unknown years 2023-2025. To create these, I feed the "new_data" dataframe we created earlier in the predict function along with the model being used for prediction and then turn the output into a dataframe. Like we did before with the 2016-2022 data, I now combine the years 2023-2025 with the predicted graduation rates. I go ahead and add a grad_rate column, which will be missing for now. We then bind the rows of the "base_data", which contains the 2016-2022 grad rates and predictions, with the "fut_data", which contains the predictions for 2023-2025 and missing values for the actual graduation rates since we don't know those. 
 
-```{r}
+```r
 fut_pred <- data.frame(predict(base_model, new_data, interval = 'prediction'))
 fut_data <- cbind(new_data, fut_pred)
 fut_data$grad_rate <- c(NA, NA, NA)
@@ -54,7 +54,7 @@ all_data <- rbind(base_data, fut_data)
 
 Finally, to complete my dataframe for plotting, I replace the missing graduation rate data for 2023-2025 with the predicted values from 2023-2025.
 
-```{r}
+```r
 all_data$grad_rate[8] <- all_data$fit[8]
 all_data$grad_rate[9] <- all_data$fit[9]
 all_data$grad_rate[10] <- all_data$fit[10]
@@ -62,7 +62,7 @@ all_data$grad_rate[10] <- all_data$fit[10]
 
 The plot is the primary reference for the stakeholders, which will demonstrate the model itself, the known graduates rates from 2016-2022, and the projections for 2023-2025. We include the lower and upper bounds of the predictions to visualize the uncertainty. 
 
-```{r}
+```r
 plot <- all_data |>
   ggplot(aes(year, grad_rate)) +
   geom_point() +
@@ -86,40 +86,40 @@ The next model takes into account the correlations between TSTC graduation rates
 
 First, I'll create the dataframe we'll use to built the model.
 
-```{r}
+```r
 data <- data.frame(year = c(2016, 2017, 2018, 2019, 2020, 2021, 2022), grad_rate = c(.28, .32, .41, .37, .42, .4, .37), texas_grad_rate = c(.186, .217, .233, .249, .258, .257, .251), sat_math_cohort = c(514, 513, 511, 508, 527, 531, 528), unemployment = c(.046, .043, .039, .035, .077, .056, .039))
 
 ```
 
 This dataframe contains three additional variables: the average graduation rate for two-year colleges in the state of Texas, the national average math SAT score for each cohort of students, and the Texas unemployment rate. Examining the bivariate correlations between these variables and our college's graduation rate demonstrate that these variables may be useful indicators to improve our model.
 
-```{r}
+```r
 cor(data)
 ```
 
 We then create a dataframe that contains the new years 2023-2025, and our assumptions about the three additional variables. For the average graduation rate for two-year colleges in Texas, we assume a 1 percentage point increase per year. For unemployment, we already know the 2023 Texas unemployment rate and we use official projections of unemployment rates for 2024 and 2025. Finally, we include the average math SAT scores for each cohort of students, which are known values because the graduation rates for 2023/2024/2025 are the 2020, 2021, and 2022 cohorts. 
 
-```{r}
+```r
 new_data <- data.frame(year = c(2023, 2024, 2025), texas_grad_rate = c(.261, .271, .281), sat_math_cohort = c(523, 528, 521), unemployment = c(.041, .042, .044))
 ```
 
 Here we create our revised model to include the new variables and evaluate view the model with summary(). 
 
-```{r}
+```r
 better_model <- lm(grad_rate ~ texas_grad_rate + sat_math_cohort + unemployment, data = data)
 summary(better_model)
 ```
 
 Here we create a dataframe that contains the predicted graduation rates for each year 2016-2022 and then we bind those prediction to our original dataframe
 
-```{r}
+```r
 pred.int <- data.frame(predict(better_model, interval = 'prediction'))
 better_data <- cbind(data, pred.int)
 ```
 
 Then we need to create a dataframe that contains the predicted values for the new years 2023-2025, combine that information with the years and include missing values for the actual graduation rates, since we don't know those. 
 
-```{r}
+```r
 fut_pred2 <- data.frame(predict(better_model, new_data, interval = 'prediction'))
 fut_data2 <- cbind(new_data, fut_pred2)
 fut_data2$grad_rate <- c(NA, NA, NA)
@@ -127,7 +127,7 @@ fut_data2$grad_rate <- c(NA, NA, NA)
 
 We then combine the unknown years to the known years and pull the predicted values for 2023-2025 into the graduation rates column so that all graduation rates are in the same column. We now have a dataframe that contains 2016-2025, including known college graduation rates for 2016-2022 and predicted college graduation rates for 2023-2025.
 
-```{r}
+```r
 all_data2 <- rbind(better_data, fut_data2)
 all_data2$grad_rate[8] <- all_data2$fit[8]
 all_data2$grad_rate[9] <- all_data2$fit[9]
@@ -136,7 +136,7 @@ all_data2$grad_rate[10] <- all_data2$fit[10]
 
 Finally, we plot our model, with the predictions and the lower and upper bounds of the predictions for our stakeholders. 
 
-```{r}
+```r
 plot <- all_data2 |>
   ggplot(aes(year, grad_rate)) +
   geom_point() +
