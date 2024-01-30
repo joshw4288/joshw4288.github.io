@@ -1,14 +1,14 @@
 ---
-title: "2023-2025 Graduation Rate Predictions"
+title: "Predicting College Graduation Rates (2023-2025)"
 layout: post
-image: "/posts/plot.png"
+image: "/posts/image_predicting_graduation_rates.jpg"
 tags: [R, GLM, Predict]
 ---
-**In this project, I project future college graduation rates for a college in Texas. Note that this is a hypothetical project that is based on a real-world project I completed in my role as a research scientist.**
+**In this project, I project future college graduation rates for a college in Texas. This is similar to a real project I completed for stakeholders in my role as a research scientist. All data used in this project are either publically available or fictitious**
 
 # Context and Base Model
 
-I was asked to review projected graduation rates, which had been provided to the executive leadership team by an analyst. The model presented to the executive leadership team was a linear regression with graduation rates for unknown years (2023, 2024, 2025) predicted by the linear extrapolation of graduation rate from year. This model is reproduced below and reflects a simple estimate based on an assumption of a linear trend over time. Based upon graduation rates from 2016-2022, the model produces the best linear fit that minimizes the squared distance between the actual values and the predicted values. Prediction intervals are wide and reflect the potential range we could reasonably expect given the uncertainty around predicting single values into the future.  
+I was asked to review projected graduation rates, which had been provided to the executive leadership team by an analyst. The model presented to the executive leadership team was a linear regression with graduation rates for unknown years (2023, 2024, 2025) predicted by the linear extrapolation of graduation rate from year. This model is reproduced below and reflects a simple estimate based on an assumption of a linear trend over time. Based upon graduation rates from 2016-2022, the model produces the best linear fit that minimizes the squared distance between the actual values and the predicted values. Prediction intervals are wide and reflect the potential range we could reasonably expect given the uncertainty around predicting single values into the future. I then produce a revised model, which takes into account important features that provide additional information and improve the model. 
 
 First, I load a series of packages that allow me to manipulate data using the tidyverse and select a nice theme for my ggplot figures.
 
@@ -77,6 +77,9 @@ plot <- all_data |>
 
 print(plot)
 ```
+<br>
+![alt text](/img/posts/plota_prediction_graduation_rates.png "Predicting College Graduation Rates")
+<br>
 
 My biggest gripe about this model is that it does not account for any internal or external variables that plausibly impact graduation rates. I think we can better not just in terms of making accurate predictions but also with justifying the model conceptually for stakeholders. 
 
@@ -151,6 +154,10 @@ plot <- all_data2 |>
 
 print(plot)
 ```
+<br>
+![alt text](/img/posts/plotb_predicting_graduation_rates.png "Predicting College Graduation Rates")
+<br>
+
 
 # Conclusions and Recommendations
 
