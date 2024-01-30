@@ -4,8 +4,7 @@ layout: post
 image: "/posts/plot.png"
 tags: [R, GLM, Predict]
 ---
-
-**Note that this is a hypothetical project that is based on a real-world project I completed in my role as a research scientist.**
+**In this project, I project future college graduation rates for a college in Texas. Note that this is a hypothetical project that is based on a real-world project I completed in my role as a research scientist.**
 
 # Context and Base Model
 
