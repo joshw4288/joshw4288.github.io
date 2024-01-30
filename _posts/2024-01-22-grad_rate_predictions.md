@@ -72,8 +72,11 @@ plot <- all_data |>
   theme_economist_white() +
   scale_x_continuous(breaks = c(2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025)) +
   scale_y_continuous(limits = c(0.20, 0.60), breaks = c(.10, .20, .30, .40, .50, .60)) +
-  labs(subtitle = "Prediction Based on Graduation Rate ~ Year\n", x = "", y = "Graduation Rate\n", caption = "Assumes TSTC graduation rates are a linear function of time") +
-  geom_label(aes(label = round(grad_rate, 2)), vjust = -0.5)
+  labs(subtitle = "Prediction Based on Graduation Rate ~ Year\n", x = "", y = "Graduation Rate\n", caption = "Assumes TSTC
+  graduation rates are a linear function of time") +
+  geom_label(aes(label = round(grad_rate, 2)), vjust = -0.5) +
+  geom_text(aes(label = "Predictions", x = 2024, y = 0.55)) +
+  annotate("rect", xmin = 2022.5, xmax = 2025.5, ymin = 0.2, ymax = .6, alpha = .25, fill = "red")
 
 print(plot)
 ```
@@ -150,7 +153,9 @@ plot <- all_data2 |>
   scale_x_continuous(breaks = c(2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025)) +
   scale_y_continuous(limits = c(0.10, 0.60), breaks = c(.10, .20, .30, .40, .50, .60)) +
   labs(title = "Predicting College Graduation Rate (2023-2025)\n", subtitle = "Prediction Based on:\nGraduation Rate ~ Cohort MathSAT + TX Unemployment Rate + \nTX Two-year college Graduation Rates\n", x = "", y = "Graduation Rate\n", caption = "Uses math SAT cohort averages of 523, 528, & 521 for 2023-2025\n Uses Texas unemployment rates of 4.1%, 4.2% and 4.4% for 2023-2025\n Assumes + 1 percentage point to Texas two-year college graduation rate each year 2023-2025") +
-  geom_label(aes(label = round(grad_rate, 2)), vjust = -0.5)
+  geom_label(aes(label = round(grad_rate, 2)), vjust = -0.5) +
+  geom_text(aes(label = "Predictions", x = 2024, y = 0.55)) +
+  annotate("rect", xmin = 2022.5, xmax = 2025.5, ymin = 0.2, ymax = .6, alpha = .25, fill = "red")
 
 print(plot)
 ```
