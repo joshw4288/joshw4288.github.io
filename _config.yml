@@ -24,7 +24,6 @@ avatar_image: /img/IMG_2704_Cropped.jpg
 # Contact links
 linkedln: "www.linkedin.com/in/profjd" # Add your linkedln handle
 github: "https://github.com/joshw4288"  # Add your github handle
-GoogleScholar: "https://scholar.google.com/citations?user=5UHWOrgAAAAJ&hl=en"
 
 paginate: 6
 paginate_path: "/page/:num"
