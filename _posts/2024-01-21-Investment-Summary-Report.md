@@ -126,7 +126,7 @@ Standard deviation indicates the spread of asset prices from their average price
 Here we pivot the table so that we have one column that provides the daily return and then a column that specifies the portfolio. We group the data by portfolio and summarize the volatility as the standard deviation of the daily return. We can clearly see that the investment portfolio does have greater variability than the benchmark.
 
 ## Avg. Volatility
-```{r, echo = FALSE}
+```r
 summarize_risk <- all_data %>%
   pivot_longer(c("portfolio_daily", "spy_daily"), names_to = "portfolio", values_to = "daily_return")
 summarize_risk$portfolio <- factor(summarize_risk$portfolio)
