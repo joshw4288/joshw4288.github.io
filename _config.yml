@@ -22,7 +22,7 @@ avatar_image: /img/IMG_2704_Cropped.jpg
 
 #-------------------------------
 # Contact links
-linkedln: "www.linkedin.com/in/profjd" # Add your linkedln handle
+linkedln: "https://linkedin.com/in/profjd" # Add your linkedln handle
 github: "https://github.com/joshw4288"  # Add your github handle
 
 paginate: 6
