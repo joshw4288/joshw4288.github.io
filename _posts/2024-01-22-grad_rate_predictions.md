@@ -72,8 +72,7 @@ plot <- all_data |>
   theme_economist_white() +
   scale_x_continuous(breaks = c(2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025)) +
   scale_y_continuous(limits = c(0.20, 0.60), breaks = c(.10, .20, .30, .40, .50, .60)) +
-  labs(subtitle = "Prediction Based on Graduation Rate ~ Year\n", x = "", y = "Graduation Rate\n", caption = "Assumes TSTC
-  graduation rates are a linear function of time") +
+  labs(subtitle = "Prediction Based on Graduation Rate ~ Year\n", x = "", y = "Graduation Rate\n", caption = "Assumes graduation rates are a linear function of time") +
   geom_label(aes(label = round(grad_rate, 2)), vjust = -0.5) +
   geom_text(aes(label = "Predictions", x = 2024, y = 0.55)) +
   annotate("rect", xmin = 2022.5, xmax = 2025.5, ymin = 0.2, ymax = .6, alpha = .25, fill = "red")
@@ -88,7 +87,7 @@ My biggest gripe about this model is that it does not account for any internal o
 
 # Revised Model
 
-The next model takes into account the correlations between TSTC graduation rates from 2016-2022 and national cohort average math SAT scores (r = .41), the Texas unemployment rate (r = .40), and average graduation rates for two-year colleges in Texas (r = .87). We already know the 2023 unemployment rate and the 2020-2022 cohort math SAT scores so this model incorporates more known information that impacts graduation rates. However, assumptions still need to be made for 2023-2025 graduation rates for two-year colleges across Texas and for 2024-2025 unemployment rates. The model uses the 2020, 2021, and 2022 average math SAT scores, uses estimates of unemployment rates of 4.2% and 4.4% for 2024 and 2025 respectively, and assumes an increase by one percentage point per year for the average graduation rate for Texas two-year colleges. Under these assumptions, predicted TSTC graduation rates for 2023, 2024, and 2025 are 40%, 41%, and 44% respectively. 
+The next model takes into account the correlations between the college's graduation rates from 2016-2022 and national cohort average math SAT scores (r = .41), the Texas unemployment rate (r = .40), and average graduation rates for two-year colleges in Texas (r = .87). We already know the 2023 unemployment rate and the 2020-2022 cohort math SAT scores so this model incorporates more known information that impacts graduation rates. However, assumptions still need to be made for 2023-2025 graduation rates for two-year colleges across Texas and for 2024-2025 unemployment rates. The model uses the 2020, 2021, and 2022 average math SAT scores, uses estimates of unemployment rates of 4.2% and 4.4% for 2024 and 2025 respectively, and assumes an increase by one percentage point per year for the average graduation rate for Texas two-year colleges. Under these assumptions, the college's predicted graduation rates for 2023, 2024, and 2025 are 40%, 41%, and 44% respectively. 
 
 First, I'll create the dataframe we'll use to built the model.
 
