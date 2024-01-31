@@ -1,0 +1,163 @@
+---
+title: "Annual Investment Performance Summary"
+layout: post
+image: "/posts/image_predicting_graduation_rates.jpg"
+tags: [R, Finance, Trends]
+---
+
+**I report on the returns on an investment portfolio and provide a comparitive analysis of returns, volatility, and the information ratio**
+
+# Introduction
+
+This brief report provides an overview of the your portfolio's 2023 performance and compares that performance to a low-cost index fund that tracks the S&P500 (SPY). 
+
+First, I load the necessary libraries and load the data for the portfolio and the benchmark. The loaded data contains the daily return, the cumulative return, and the closing price for both.
+
+```r
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+library(ggthemes)
+
+SPY_data <- read.csv("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023//SPY2023.csv", header = TRUE)
+SPY_data$Date <- as.Date(SPY_data$Date, "%m/%d/%y")
+SPY_data <- SPY_data %>%
+                  select(c("Date", "daily_return", "cum_return", "Close"))
+
+portfolio_data <- read.csv("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023//portfolio2023.csv", header = TRUE)
+portfolio_data$Date <- as.Date(portfolio_data$Date, "%m/%d/%y")
+portfolio_data <- portfolio_data %>%
+                  select(c("Date", "daily_return", "cum_return", "Close"))
+
+```
+
+I join the two dataframes by date so all data is contained in a single dataframe.
+
+
+```r
+all_data <- SPY_data %>%
+                inner_join(portfolio_data, by = "Date") %>%
+                rename(spy_daily = daily_return.x, spy_cumulative = cum_return.x, spy_close = Close.x, 
+                       portfolio_daily = daily_return.y, portfolio_cumulative = cum_return.y, portfolio_close = Close.y)
+
+```
+
+
+# Performance
+
+## 2023 Portfolio Comparison
+
+Here I create a table that filters the data to include only 2023, select the column that contains the closing values and then pivot the table such that there is a single column that contains the closing value and a column that identifies the portfolio. This changes the dataframe from a wide format to a long format.
+
+```r
+performance_table <- all_data %>%
+  filter(Date == '2022-12-30' | Date == '2023-12-29') %>%
+  select(Date, spy_close, portfolio_close) %>%
+  pivot_longer(cols = c("spy_close", "portfolio_close"), 
+               names_to = "Portfolio", values_to = "Close")
+```
+
+Then I take the long format table and
+
+```r
+performance_table_wide <- performance_table %>%
+  pivot_wider(names_from = "Date", values_from = "Close")
+
+names(performance_table_wide)[3] ="post"
+names(performance_table_wide)[2] ="pre"
+
+performance_table_wide$Portfolio <- factor(performance_table_wide$Portfolio)
+performance_table_wide$Portfolio <- recode(performance_table_wide$Portfolio, spy_close = "SPY", portfolio_close = "Your Return")
+```
+
+return_comparison <- performance_table_wide %>%
+  group_by(Portfolio) %>%
+  mutate(performance = (post-pre)/pre) %>%
+  ggplot(aes(x = reorder(Portfolio, performance), y = performance)) +
+  geom_col() +
+  theme_economist() +
+  labs(x = "", y = "Return, %\n", title = "2023 Return Comparison", caption = "Returns are based on adjusted close") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, .30), breaks = c(0, .05, .10, .15, .20, .25, .30)) +
+  geom_text(aes(label = scales::percent(round(performance, digits = 4))), vjust = -0.5)
+  
+return_comparison
+ggsave("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023/portfolio_images/return_comparison.jpg", return_comparison, height = 5, width = 10)
+```
+
+## 2023 Cumulative Return Comparison
+
+```{r, echo = FALSE}
+
+Performance_Graph <- ggplot(all_data, aes(x = Date, y = portfolio_cumulative)) + geom_line(aes(color = "Your Portfolio")) +
+                           geom_line(aes(x = Date, y = spy_cumulative, color = "SPY")) +
+                           theme_economist() + 
+  xlab("\nDate") + 
+  ylab("Time Weighted Return\n") + 
+                           guides(color=guide_legend("Portfolio")) + labs(title = "2023 Cumulative Performance", caption = "Returns are based on adjusted close") +
+                           scale_x_date(date_breaks = "1 month") + scale_y_continuous(label = scales::percent, limits = c(0, .30), breaks = c(0, .05, .10, .15, .20, .25, .30)) + scale_color_manual(values = c("blue","red")) +
+  geom_hline(yintercept = all_data$portfolio_cumulative[250], color = "red") +
+  geom_hline(yintercept = all_data$spy_cumulative[250], color = "blue") +
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+
+Performance_Graph
+
+ggsave("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023/portfolio_images/performance_graph.jpg", Performance_Graph, height = 5, width = 10)
+```
+
+
+# Volatility
+
+Standard deviation indicates the spread of asset prices from their average price. The larger the standard deviation, the larger the swings in day-to-day prices. The smaller the standard deviation, the smaller the swings in day-to-day prices.  
+
+## Avg. Volatility
+```{r, echo = FALSE}
+summarize_risk <- all_data %>%
+  pivot_longer(c("portfolio_daily", "spy_daily"), names_to = "portfolio", values_to = "daily_return")
+summarize_risk$portfolio <- factor(summarize_risk$portfolio)
+
+volatility_plot <- summarize_risk %>%
+  group_by(portfolio) %>%
+  summarize(volatility = sd(daily_return)) %>%
+  ggplot(aes(reorder(portfolio, volatility), volatility)) + geom_col(show.legend = FALSE) + labs(title = "Daily Volatility Comparison, %", y = "Standard Deviation of Daily Return\n", x = "") + theme_economist() + scale_y_continuous(labels = scales::percent) + scale_x_discrete(labels = c("SPY", "Your Portfolio")) +
+  geom_text(aes(label = scales::percent(round(volatility, digits = 4))), vjust = -0.5)
+
+#summarize_risk %>%
+ #group_by(portfolio) %>%
+  #summarize(volatility = sd(daily_return))
+
+volatility_plot
+
+ggsave("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023/portfolio_images/valatility.jpg", volatility_plot, height = 5, width = 10)
+
+```
+
+## vs. SPY
+
+```{r, echo = FALSE}
+daily_volatility <- ggplot(all_data, aes(x = Date, y = portfolio_daily)) + geom_line(aes(color = "Your Portfolio")) +
+                           geom_line(aes(x = Date, y = spy_daily, color = "SPY"), alpha = 0.40) +
+                           theme_economist() + xlab("Date") + ylab("Daily Return (%)") + 
+                           guides(color=guide_legend("Portfolio")) + labs(title = "Daily Volatility Compared to SPY") +
+                           scale_x_date(date_breaks = "1 month") + scale_y_continuous(label = scales::percent) + scale_color_manual(values = c("blue", "red")) + theme(axis.text.x=element_text(angle=90, hjust=1))
+
+daily_volatility
+
+ggsave("/Users//JDW//Desktop/Portfolio Projects/Portfolio Review/2023/portfolio_images/daily_volatility.jpg", daily_volatility, height = 5, width = 10)
+```
+
+## Information Ratio
+
+The Information Ratio is a metric of risk adjusted return. Is the additional annual gain from the current strategy worth the additional volatility? The information ratio compares the performance of the current portfolio to the performance of SPY adjusted for the additional daily volatility of the current portfolio. The information ratio of 3.73 indicates that the current portfolio provides an additional return 3.73x the additional volatility, which is considered exceptional. 
+
+```{r, echo = FALSE}
+all_data <- all_data |>
+  mutate(daily_difference = portfolio_daily - spy_daily)
+
+std_difference <- sd(all_data$daily_difference)
+
+portfolio_ir <- (.278 - .262)/std_difference
+```
+
+# Summary
+
+Your portfolio returned 27.8% in 2023 compared to a benchmark return (SPY) of 26.2%. This additional return amounts to 70266 of additional value, which when adjusted for management fees (26500) is 43766. The additional return (+1.6) came at a cost of a marginal increase in volatility. The information ratio of 3.73 suggests that the risk-adjusted return relative to SPY is exceptional. 
