@@ -5,7 +5,7 @@ image: "/posts/investment_performance_image.jpg"
 tags: [R, Finance, Trends, Investment, Stock Market]
 ---
 
-**I report on the returns on an investment portfolio and provide a comparitive analysis of returns, volatility, and the information ratio as a metric of risk-adjusted return.**
+**I report on the returns on an investment portfolio and provide a comparative analysis of returns, volatility, and the information ratio as a metric of risk-adjusted return.**
 
 # Introduction
 
