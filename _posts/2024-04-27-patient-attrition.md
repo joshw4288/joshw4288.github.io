@@ -120,7 +120,7 @@ survfit(Surv(duration_months, discharged) ~ 1, data = data) |>
   )
 ```
 
-ENTER TABLE1 HERE
+![alt text](/img/posts/table1.jpg)
 
 As well, I examine the 3 month retention rate, which is estimated to be between 74% and 77%. 
 
@@ -132,7 +132,7 @@ survfit(Surv(duration_months, discharged) ~ 1, data = data) |>
   )
 ```
 
-ENTER TABLE2 HERE
+![alt text](/img/posts/table2.jpg)
 
 Because the primary question of our client was whether attrition over time differs by race of the patient, I examine the survival curves for each racial category. What we visually see is that patients who identify as white have higher retention in the program than patients who identify with another racial group. We can confirm that this pattern is reliable through both the confidence intervals displayed on the plot and through chi-square test to determine whether the retention rates are reliably different from one another. 
 
