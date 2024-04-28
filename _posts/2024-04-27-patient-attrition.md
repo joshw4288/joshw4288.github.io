@@ -152,14 +152,14 @@ survfit2(Surv(duration_months, discharged) ~ race, data = data) |>
   scale_color_manual(values = c('#e26b16', '#d3215d', '#0465FF', '#002f43'))
 ```
 
-ENTER OMNIBUSPLOT HERE
+![alt text](/img/posts/omnibus_plot.jpeg)
 
 Here we can see that there is a statistically reliable difference between the retention rates. 
 
 ```r
 survdiff(Surv(duration_months, discharged) ~ race, data = data)
 ```
-ENTER TABLE 3
+![alt text](/img/posts/table3.jpg)
 
 Because we had four racial categories in our data and we can visually see that the difference in attrition is between the white category and the other racial categories, we can use the category of white patients as the baseline and compare each other racial category to the baseline to determine if there is a reliable difference for each of the comparisons. From these comparisons we can see that there is a reliable difference between white patients and the other racial categories. 
 
@@ -185,8 +185,8 @@ wvb_plot <- survfit2(Surv(duration_months, discharged) ~ race, data = wvb) |>
 
 wvb_plot
 ```
-ENTER table4
-ENTER wvb_plot
+![alt text](/img/posts/table4.jpg)
+![alt text](/img/posts/wvb_plot.jpeg)
 
 ```r
 wvo <- data |>
@@ -208,8 +208,8 @@ wvo_plot <- survfit2(Surv(duration_months, discharged) ~ race, data = wvo) |>
 
 wvo_plot
 ```
-ENTER table4
-ENTER wvo_plot
+![alt text](/img/posts/table5.jpg)
+![alt text](/img/posts/wvo_plot.jpeg)
 
 ```r
 
@@ -233,8 +233,8 @@ wva_plot <- survfit2(Surv(duration_months, discharged) ~ race, data = wva) |>
 wva_plot
 ```
 
-ENTER table5
-ENTER wva_plot
+![alt text](/img/posts/table6.jpg)
+![alt text](/img/posts/wva_plot.jpeg)
 
 Here we can see the estimated 1 year retention rates across each racial group and again, we can clearly see that white patients have higher retention rates than all other racial categories. But what happens if we look at other periods of time? For example, looking at the 2-month retention rates we begin to see differences across racial groups. In the third table below, we can see that by the third month we do see reliably higher attrition among black patients and other/multiracial patients relative to white patients. Finally, we can confirm the pattern we see for asian and white patients at the sixth month mark in the fourth table. As a follow-up to all of this I would engage in further conversation with subject matter experts at the hospital to understand what possibilities could be causing disparities to arise at the 2-month and 6-month marks and then using the necessary data we can test those hypotheses that we derive from those conversations. 
 
@@ -250,6 +250,7 @@ table_ci <- survfit(Surv(duration_months, discharged) ~ race, data = data) |>
 
 table_ci
 ```
+![alt text](/img/posts/table7.jpg)
 
 ```{r}
 table_ci2 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |> 
@@ -261,7 +262,7 @@ table_ci2 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |>
 
 table_ci2
 ```
-
+![alt text](/img/posts/table8.jpg)
 
 ```{r}
 table_ci3 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |> 
@@ -273,6 +274,7 @@ table_ci3 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |>
 
 table_ci3
 ```
+![alt text](/img/posts/table9.jpg)
 
 ```{r}
 table_ci6 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |> 
@@ -284,6 +286,7 @@ table_ci6 <- survfit(Surv(duration_months, discharged) ~ race, data = data) |>
 
 table_ci6
 ```
+![alt text](/img/posts/table10.jpg)
 
 Based on the second question, how might other demographic variables be related to attrition rates over time at the hospital? My approach begins with a Cox Proportional Hazard Regression Model, which is a method of determining which input variables are most associated with attrition over a specified period of time. For simplicity of demonstration, I will use only a small selection of the variables examined: race, marital status, gender, and education level. 
 
@@ -294,3 +297,5 @@ cox_model <- survival::coxph(
 
 summary(cox_model)
 ```
+
+![alt text](/img/posts/table11.jpg)
