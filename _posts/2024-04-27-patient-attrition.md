@@ -1,11 +1,13 @@
 ---
-title: "Patient Attrition Analysis for Substance Treatment Facility"
+title: "Patient Attrition Analysis for Substance Abuse Treatment Facility"
 layout: post
 image: "/posts/ENTERIMAGE.jpg"
 tags: [R, Survival Analysis, People Analytics, Regression, Prediction]
 ---
 
-** This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.**
+** I analyze the attrition patterns of patients at a substance abuse treatment facility. 
+
+This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.
 
 The facility wanted to understand the patterns of patients leaving a substance abuse rehabilitation program and specifically to understand a) if there were differences across racial groups in attrition from the program and b) to see what other demographic variables collected at intake would be useful for identifying the patient groups most at risk of leaving the program.
 
@@ -297,5 +299,7 @@ cox_model <- survival::coxph(
 
 summary(cox_model)
 ```
+
+As expected from the prior analyses, race has the largest impact on attrition. Compared to...
 
 ![alt text](/img/posts/table11.jpg)
