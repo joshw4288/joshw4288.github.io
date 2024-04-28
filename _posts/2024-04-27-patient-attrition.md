@@ -1,7 +1,7 @@
 ---
 title: "Patient Attrition Analysis for Substance Abuse Treatment Facility"
 layout: post
-image: "/posts/ENTERIMAGE.jpg"
+image: "/posts/omnibus_plot.jpg"
 tags: [R, Survival Analysis, People Analytics, Regression, Prediction]
 ---
 
