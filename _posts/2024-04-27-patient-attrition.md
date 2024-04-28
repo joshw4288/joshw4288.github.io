@@ -5,7 +5,7 @@ image: "/posts/ENTERIMAGE.jpg"
 tags: [R, Survival Analysis, People Analytics, Regression, Prediction]
 ---
 
-** This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.
+** This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.**
 
 The facility wanted to understand the patterns of patients leaving a substance abuse rehabilitation program and specifically to understand a) if there were differences across racial groups in attrition from the program and b) to see what other demographic variables collected at intake would be useful for identifying the patient groups most at risk of leaving the program.
 
