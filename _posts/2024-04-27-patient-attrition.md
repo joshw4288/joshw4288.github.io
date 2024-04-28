@@ -1,11 +1,11 @@
 ---
 title: "Patient Attrition Analysis for Substance Abuse Treatment Facility"
 layout: post
-image: "/posts/omnibus_plot.jpg"
+image: "/posts/omnibus_plot.jpeg"
 tags: [R, Survival Analysis, People Analytics, Regression, Prediction]
 ---
 
-** I analyze the attrition patterns of patients at a substance abuse treatment facility. 
+** I analyze the attrition patterns of patients at a substance abuse treatment facility.** 
 
 This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.
 
