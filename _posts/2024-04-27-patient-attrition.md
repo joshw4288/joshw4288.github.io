@@ -108,7 +108,7 @@ survfit2(Surv(duration_months, discharged) ~ 1, data = data) |>
   scale_y_continuous(limits = c(0, 1))
 ```
 
-ENTER IMAGE 1 HERE
+![alt text](/img/posts/image1.jpeg)
 
 The table below shows the estimated one year retention rate to be between 49% and 52%.  
 
