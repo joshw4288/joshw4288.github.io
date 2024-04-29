@@ -9,13 +9,13 @@ plugins:
 #-------------------------------
 # General Site Settings
 title: Joshua D. Wright, Ph.D.
-description: "I am a data scientist and research scientist focused on producing business value. I currently manage research and analytics projects for executive leadership teams across Operations, Human Resources, and Finance in both a full-time and consulting capacity. My portfolio reflects the wide variety of projects I have worked on for diverse stakeholders. Please visit my Github & LinkedIn pages (or download my Resume) by using the links below!"
+description: "I am a research scientist, data scientist, and people analytics practitioner. I currently direct all institutional survey research and analytics for a 12 campus technical college. This page reflects a variety of real-world projects I have worked on for diverse stakeholders in my full-time role and in a consulting capacity. You can visit my LinkedIn page or download my resume by using the links below!"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 #-------------------------------
 # About Section
-subtitle: Data Science <span style="color:#f58506"> Portfolio </span>
+subtitle: Analytics <span style="color:#f58506"> Portfolio </span>
 location: "New York, NY"
 resume_url: /docs/Joshua Wright Resume 1-29-2024.pdf
 avatar_image: /img/IMG_2704_Cropped.jpg
