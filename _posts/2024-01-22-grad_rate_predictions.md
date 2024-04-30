@@ -4,7 +4,7 @@ layout: post
 image: "/posts/image_predicting_graduation_rates.jpg"
 tags: [R, GLM, Predict]
 ---
-**In this project, I project future college graduation rates for a college in Texas. This is similar to a real project I completed for stakeholders in my role as a research scientist. All data used in this project are either publically available or fictitious**
+In this project, I project future college graduation rates for a college in Texas. This is similar to a real project I completed for stakeholders in my role as a research scientist. All data used in this project are either publically available or fictitious.
 
 # Context and Base Model
 
@@ -17,7 +17,7 @@ library(tidyverse)
 library(ggthemes)
 ```
 
-Next, I create a data frame that contains the known graduation rates from 2016-2022 and create a dataframe wich contains the unknown years 2023-2025.
+Next, I create a dataframe that contains the known graduation rates from 2016-2022 and create a dataframe which contains the unknown years 2023-2025.
 
 ```r
 data <- data.frame(year = c(2016, 2017, 2018, 2019, 2020, 2021, 2022), grad_rate = c(.28, .32, .41, .37, .42, .4, .37))
