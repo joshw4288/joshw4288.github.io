@@ -30,7 +30,7 @@ portfolio_data <- portfolio_data %>%
                   select(c("Date", "daily_return", "cum_return", "Close"))
 
 ```
-Note that I concert the date column to a date type, which we need in order to filter for specific time periods and to plot the trends over time. 
+Note that I convert the date column to a date type, which we need in order to filter for specific time periods and to plot the trends over time. 
 
 Then I join the two dataframes by date so all data is contained in a single dataframe.
 
@@ -47,7 +47,7 @@ all_data <- SPY_data %>%
 
 ## 2023 Portfolio Comparison
 
-In this first section I compare the performance of the investment porfolio for 2023 against the 2023 performance of SPY, a low cost exchange-traded fund that track the S&P500 index.
+In this first section I compare the performance of the investment porfolio for 2023 against the 2023 performance of SPY, a low cost exchange-traded fund that tracks the S&P500 index.
 
 Here I create a table that filters the data to include only 2023, beginning with the last trading day of 2022 and running to the last trading day of 2023. I select the column that contains the closing values and then pivot the table such that there is a single column that contains the closing value, a single column that identifies the date, and a column that identifies the portfolio. 
 
