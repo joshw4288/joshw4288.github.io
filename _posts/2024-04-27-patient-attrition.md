@@ -1,15 +1,15 @@
 ---
-title: "Patient Attrition Analysis for Substance Abuse Treatment Facility"
+title: "Patient Attrition Analysis for Depression Treatment Program"
 layout: post
 image: "/posts/omnibus_plot.jpeg"
 tags: [R, Survival Analysis, People Analytics, Regression, Prediction]
 ---
 
-I analyze the attrition patterns of patients at a substance abuse treatment facility. 
+I analyze the attrition patterns of patients in a depression treatment program. 
 
-This example is based on an analysis I completed as a consultant for a substance abuse treatment facility but uses fictitious data to demonstrate the approach.
+This example is based on an analysis I completed as a consultant but uses fictitious data to demonstrate the approach.
 
-The facility wanted to understand the patterns of patients leaving a substance abuse rehabilitation program and specifically to understand a) if there were differences across racial groups in attrition from the program and b) to see what other demographic variables collected at intake would be useful for identifying the patient groups most at risk of leaving the program.
+The facility wanted to understand the patterns of patients leaving a depression treatment program and specifically to understand a) if there were differences across racial groups in attrition from the program and b) to see what other demographic variables collected at intake would be useful for identifying the patient groups most at risk of leaving the program.
 
 ```r
 library(tidyverse)
@@ -68,7 +68,7 @@ data$education <- factor(data$education, levels = c("Non HS Grad", "HS Grad", "S
 data$sex <- factor(data$sex, levels = c("F", "M"))
 ```
 
-First, I examine the general pattern of attrition by plotting the survival function over 1 year. Attrition begins quickly, with approximately 25% of patients leaving within the first three months. Attrition slows and we see another 25% of patients exit the program within the following 9 months, for a 1 year attrition rate of approximately 50%. Note that the start of the time period is admission + 30 days. This is because patients are not considered admitted until the 30 day intake period ends and then a decision is made about whether the patient needs to be admitted. 
+First, I examine the general pattern of attrition by plotting the survival function over 1 year. Attrition begins quickly, with approximately 25% of patients leaving within the first three months. Attrition slows and we see another 25% of patients exit the program within the following 9 months, for a 1 year attrition rate of approximately 50%. Note that the start of the time period is admission + 30 days. This is because patients are not considered admitted until the 30 day intake period ends.
 
 ```r
 data$admission_date <- as.Date(data$admission_date_1, "%d-%b-%y")
@@ -238,7 +238,7 @@ wva_plot
 ![alt text](/img/posts/table6.jpg)
 ![alt text](/img/posts/wva_plot.jpeg)
 
-Here we can see the estimated 1 year retention rates across each racial group and again, we can clearly see that white patients have higher retention rates than all other racial categories. But what happens if we look at other periods of time? For example, looking at the 2-month retention rates we begin to see differences across racial groups. In the third table below, we can see that by the third month we do see reliably higher attrition among black patients and other/multiracial patients relative to white patients. Finally, we can confirm the pattern we see for asian and white patients at the sixth month mark in the fourth table. As a follow-up to all of this I engage in further conversation with subject matter experts at the hospital to understand what possibilities could be causing disparities to arise at the 2-month and 6-month marks and then using the necessary data we can test those hypotheses that we derive from those conversations.
+Here we can see the estimated 1 year retention rates across each racial group and again, we can clearly see that white patients have higher retention rates than all other racial categories. But what happens if we look at other periods of time? For example, looking at the 2-month retention rates we begin to see differences across racial groups. In the third table below, we can see that by the third month we do see reliably higher attrition among black patients and other/multiracial patients relative to white patients. Finally, we can confirm the pattern we see for asian and white patients at the sixth month mark in the fourth table. As a follow-up to all of this I engage in further conversation with subject matter experts in the clinic to understand what possibilities could be causing disparities to arise at the 2-month and 6-month marks and then using the necessary data we can test those hypotheses that we derive from those conversations.
   
 
 ```{r}
@@ -291,7 +291,7 @@ table_ci6
 ```
 ![alt text](/img/posts/table10.jpg)
 
-Based on the second question, how might other demographic variables be related to attrition rates over time at the hospital? My approach begins with a Cox Proportional Hazard Regression Model, which is a method of determining which input variables are most associated with attrition over a specified period of time. For simplicity of demonstration, I will use only a small selection of the variables examined: race, marital status, gender, and education level. 
+Based on the second question, how might other demographic variables be related to attrition rates over time? My approach begins with a Cox Proportional Hazard Regression Model, which is a method of determining which input variables are most associated with attrition over a specified period of time. For simplicity of demonstration, I will include only a small selection of variables: race, marital status, gender, and education level. 
 
 ```{r}
 cox_model <- survival::coxph(
