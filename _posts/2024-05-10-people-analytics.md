@@ -9,7 +9,7 @@ This project showcases a report provided to a hypothetical HR executive, who was
 
 I provided a pdf report for the executive, which can be viewed below.
 
-<iframe src="https://drive.google.com/file/d/1nlHw_uhxjZjSq4TAPZOUDcMKx5LMOHNL/view?usp=sharing&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
+<iframe src="https://drive.google.com/uc?id=1nlHw_uhxjZjSq4TAPZOUDcMKx5LMOHNL&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
 
 
 
